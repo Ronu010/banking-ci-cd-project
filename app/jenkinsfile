@@ -1,40 +1,23 @@
 pipeline {
     agent any
 
-    environment {
-        DOCKERHUB_CREDENTIALS = credentials('dockerhub-credentials-id') // Add in Jenkins credentials
-        IMAGE_NAME = 'ronu010/banking-app'
-    }
-
     stages {
-        stage('Checkout') {
+        stage('Checkout Code') {
             steps {
-                git branch: 'main', url: 'https://github.com/Ronu010/banking-ci-cd-project.git'
+                bat 'git clone https://github.com/ronu010/banking-project.git'
             }
         }
 
         stage('Build Docker Image') {
             steps {
-                sh 'docker build -t $IMAGE_NAME .'
+                bat 'docker build -t banking-app .'
             }
         }
 
-        stage('Login to DockerHub') {
+        stage('Run Docker Container') {
             steps {
-                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+                bat 'docker run -d -p 3000:3000 --name banking-container banking-app'
             }
-        }
-
-        stage('Push Docker Image') {
-            steps {
-                sh 'docker push $IMAGE_NAME'
-            }
-        }
-    }
-
-    post {
-        failure {
-            echo "Pipeline failed. Please check logs above."
         }
     }
 }
