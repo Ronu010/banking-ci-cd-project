@@ -9,18 +9,8 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Starting Docker build...'
-                bat 'docker --version'
-                bat 'docker build -t banking-app .'
-                echo 'Docker build completed.'
+                bat 'docker build -t banking-app -f app/Dockerfile app'
             }
-        }
-    }
-    post {
-        success {
-            echo 'Pipeline completed successfully.'
-        }
-        failure {
-            echo 'Pipeline failed. Please check logs.'
         }
     }
 }
