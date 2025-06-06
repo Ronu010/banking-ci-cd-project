@@ -7,11 +7,11 @@ pipeline {
     }
 
     stages {
-        stage('Checkout') {
-            steps {
-                git 'https://github.com/Ronu010/banking-ci-cd-project.git'
-            }
-        }
+    stage('Checkout') {
+         steps {
+               git branch: 'main', url: 'https://github.com/Ronu010/banking-ci-cd-project.git'
+    }
+}
 
         stage('Build Docker Image') {
             steps {
