@@ -1,4 +1,4 @@
-# banking-ci-cd-projec# Banking CI/CD Project 🚀
+# Banking CI/CD Project 🚀
 
 This project simulates a basic banking system and focuses on building a complete DevOps pipeline using AWS, Terraform, Jenkins, Docker, Kubernetes, and monitoring tools like Grafana & Prometheus.
 
