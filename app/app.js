@@ -4,30 +4,30 @@ const PORT = 3000;
 
 app.use(express.json());
 
-// Welcome route — add this
+const users = []; // your in-memory user storage
+
 app.get('/', (req, res) => {
   res.send('Welcome to the Banking API! Use /account/:accountId to get account info.');
 });
 
 // Existing account route
 app.get('/account/:accountId', (req, res) => {
-  const accounts = {
-    "123456789": {
-      accountType: "Checking",
-      balance: 5230.75,
-      currency: "USD",
-      transactions: [
-        { id: "tx1001", date: "2025-06-06T10:15:30Z", type: "Deposit", amount: 1500, status: "Completed" },
-        { id: "tx1002", date: "2025-06-05T14:22:10Z", type: "Withdrawal", amount: 200, status: "Completed" }
-      ]
-    }
-  };
+  // your existing code here...
+});
 
-  const account = accounts[req.params.accountId];
-  if (account) {
-    res.json(account);
+// NEW: List all registered users (usernames only)
+app.get('/users', (req, res) => {
+  const safeUsers = users.map(u => ({ username: u.username }));
+  res.json(safeUsers);
+});
+
+// NEW: Check if a specific user exists
+app.get('/users/:username', (req, res) => {
+  const user = users.find(u => u.username === req.params.username);
+  if (user) {
+    res.json({ exists: true });
   } else {
-    res.status(404).json({ error: 'Account not found' });
+    res.json({ exists: false });
   }
 });
 
