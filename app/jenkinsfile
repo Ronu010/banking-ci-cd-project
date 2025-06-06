@@ -1,4 +1,4 @@
-ppipeline {
+pipeline {
     agent any
     stages {
         stage('Test') {
@@ -8,8 +8,20 @@ ppipeline {
         }
         stage('Build') {
             steps {
+                echo 'Starting Docker build...'
+                bat 'docker --version'
                 bat 'docker build -t banking-app .'
+                echo 'Docker build completed.'
             }
         }
     }
+    post {
+        success {
+            echo 'Pipeline completed successfully.'
+        }
+        failure {
+            echo 'Pipeline failed. Please check logs.'
+        }
+    }
 }
+
